@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from api.routes.geracao import router as geracao_router
 
 app = FastAPI(title="Planejador de Dieta API")
 
@@ -11,6 +12,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(geracao_router)
 
 
 @app.get("/api/health")
