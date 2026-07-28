@@ -30,21 +30,21 @@ analisar_dieta = Task(
     agent=dieta_analista,
 )
 
+_dias_str = ", ".join(DIAS_SEMANA)
+_qtd_refeicoes = len(REFEICOES)
+_lista_refeicoes = "\n- ".join([f"{r['nome']} ({r['horario']})" for r in REFEICOES])
+
 montar_cardapio = Task(
     description=(
         "Com base nas regras extraídas da dieta, crie um cardápio semanal completo.\n\n"
         "Regras da dieta: {regras_dieta}\n\n"
-        "Para cada dia da semana ({dias}), crie {qtd_refeicoes} refeições:\n"
-        "- {lista_refeicoes}\n\n"
+        f"Para cada dia da semana ({_dias_str}), crie {_qtd_refeicoes} refeições:\n"
+        f"- {_lista_refeicoes}\n\n"
         "Cada refeição deve conter:\n"
         "- Nome do prato\n"
         "- Ingredientes com quantidades\n"
         "- Modo de preparo resumido\n\n"
         "Respeite rigorosamente as regras da dieta."
-    ).format(
-        dias=", ".join(DIAS_SEMANA),
-        qtd_refeicoes=len(REFEICOES),
-        lista_refeicoes="\n- ".join([f"{r['nome']} ({r['horario']})" for r in REFEICOES]),
     ),
     expected_output="Cardápio semanal completo em formato estruturado.",
     agent=nutricionista,
