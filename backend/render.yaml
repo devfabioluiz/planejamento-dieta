@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: planejamento-dieta-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.index:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://planejamento-dieta.vercel.app
