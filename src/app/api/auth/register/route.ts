@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     if (error) {
       return NextResponse.json(
-        { erro: "Erro ao criar usuário" },
+        { erro: "Erro ao criar usuário", detalhe: error.message },
         { status: 500 }
       )
     }
