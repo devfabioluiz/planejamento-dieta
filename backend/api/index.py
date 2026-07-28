@@ -1,7 +1,18 @@
 import os
+import sys
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes.geracao import router as geracao_router
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+try:
+    from api.routes.geracao import router as geracao_router
+    logger.info("geracao_router imported successfully")
+except Exception as e:
+    logger.error(f"Failed to import geracao_router: {e}", exc_info=True)
+    geracao_router = None
 
 app = FastAPI(title="Planejador de Dieta API")
 
@@ -13,12 +24,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(geracao_router)
+if geracao_router is not None:
+    app.include_router(geracao_router)
+    logger.info("geracao_router included in app")
+else:
+    logger.warning("geracao_router is None, not including")
 
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "routes_count": len(app.routes),
+        "routes": [{"path": r.path, "methods": list(r.methods)} for r in app.routes],
+    }
 
 
 @app.get("/")
