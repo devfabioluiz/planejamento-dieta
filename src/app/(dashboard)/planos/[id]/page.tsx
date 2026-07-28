@@ -55,7 +55,7 @@ export default async function PlanoPage({
       if (!refeicoesPorDia[ref.dia_semana]) {
         refeicoesPorDia[ref.dia_semana] = []
       }
-      refeicoesPorDia[ref.dia_semana].push(ref)
+      refeicoesPorDia[ref.dia_semana]!.push(ref)
     }
   }
 
