@@ -7,7 +7,7 @@ router = APIRouter()
 
 
 @router.post("/api/gerar-cardapio", response_model=CardapioResponse)
-async def gerar_cardapio_endpoint(req: GerarCardapioRequest):
+def gerar_cardapio_endpoint(req: GerarCardapioRequest):
     try:
         resultado = gerar_cardapio(req.dieta_id, req.usuario_id)
         return CardapioResponse(
