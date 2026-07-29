@@ -50,6 +50,7 @@ montar_cardapio = Task(
     expected_output="Cardápio semanal completo em formato estruturado.",
     agent=nutricionista,
     output_key="cardapio_gerado",
+    context=[analisar_dieta],
 )
 
 revisar_cardapio = Task(
@@ -80,4 +81,5 @@ revisar_cardapio = Task(
     ),
     expected_output="JSON estruturado do cardápio semanal revisado e validado.",
     agent=revisor,
+    context=[analisar_dieta, montar_cardapio],
 )
