@@ -39,7 +39,7 @@ def gerar_cardapio(dieta_id: str, usuario_id: str) -> dict:
         )
 
         result_crew = crew.kickoff(
-            input={
+            inputs={
                 "texto_dieta": texto_dieta,
                 "objetivos": objetivos,
             }
