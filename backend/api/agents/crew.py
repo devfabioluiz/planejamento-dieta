@@ -42,6 +42,8 @@ def gerar_cardapio(dieta_id: str, usuario_id: str) -> dict:
             inputs={
                 "texto_dieta": texto_dieta,
                 "objetivos": objetivos,
+                "regras_dieta": "",
+                "cardapio_gerado": "",
             }
         )
 
