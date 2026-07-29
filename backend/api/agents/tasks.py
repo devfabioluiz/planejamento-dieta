@@ -28,6 +28,7 @@ analisar_dieta = Task(
     ),
     expected_output="Resumo estruturado das regras da dieta em formato de tópicos.",
     agent=dieta_analista,
+    output_key="regras_dieta",
 )
 
 _dias_str = ", ".join(DIAS_SEMANA)
@@ -48,6 +49,7 @@ montar_cardapio = Task(
     ),
     expected_output="Cardápio semanal completo em formato estruturado.",
     agent=nutricionista,
+    output_key="cardapio_gerado",
 )
 
 revisar_cardapio = Task(
