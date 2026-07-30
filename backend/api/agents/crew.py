@@ -2,11 +2,14 @@ import json
 import os
 import uuid
 from datetime import date, timedelta
+import crewai.llms.cache as _crewai_cache
 from crewai import Crew, Process
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from .agents import dieta_analista, nutricionista, revisor
 from .tasks import analisar_dieta, montar_cardapio, revisar_cardapio
+
+_crewai_cache.mark_cache_breakpoint = lambda msg: msg
 
 load_dotenv()
 
