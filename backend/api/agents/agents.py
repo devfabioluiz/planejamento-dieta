@@ -1,13 +1,11 @@
 import os
-
-os.environ["LITELLM_LOCAL_CACHE"] = "0"
-
 from crewai import Agent, LLM
 
 groq_llm = LLM(
     model="groq/llama-3.3-70b-versatile",
     temperature=0.3,
     api_key=os.getenv("GROQ_API_KEY"),
+    cache={"no-cache": True},
 )
 
 dieta_analista = Agent(
