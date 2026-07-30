@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import uuid
 from datetime import date, timedelta
 import crewai.llms.cache as _crewai_cache
@@ -101,9 +102,15 @@ def gerar_cardapio(dieta_id: str, usuario_id: str) -> dict:
 
 
 def _extrair_json(raw: str) -> dict:
+    raw = re.sub(r"```(?:json)?\s*\n?", "", raw).strip()
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        pass
     try:
         inicio = raw.index("{")
         fim = raw.rindex("}") + 1
-        return json.loads(raw[inicio:fim])
+        candidato = raw[inicio:fim]
+        return json.loads(candidato)
     except (ValueError, json.JSONDecodeError):
         return {"dias": []}
