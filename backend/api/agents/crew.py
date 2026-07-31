@@ -35,6 +35,8 @@ def gerar_cardapio(dieta_id: str, usuario_id: str) -> dict:
         texto_dieta = row[0]
         objetivos = row[1] or ""
 
+        ingredientes_dispensa = _buscar_dispensa(conn, usuario_id)
+
         crew = Crew(
             agents=[dieta_analista, nutricionista, revisor],
             tasks=[analisar_dieta, montar_cardapio, revisar_cardapio],
@@ -48,6 +50,7 @@ def gerar_cardapio(dieta_id: str, usuario_id: str) -> dict:
                 "objetivos": objetivos,
                 "regras_dieta": "",
                 "cardapio_gerado": "",
+                "ingredientes_dispensa": ingredientes_dispensa,
             }
         )
 
@@ -99,6 +102,22 @@ def gerar_cardapio(dieta_id: str, usuario_id: str) -> dict:
             "status": "success",
             "mensagem": "Cardápio gerado com sucesso",
         }
+
+
+def _buscar_dispensa(conn, usuario_id: str) -> str:
+    result = conn.execute(
+        text(
+            "SELECT nome, quantidade, categoria FROM despensa "
+            "WHERE usuario_id = :uid ORDER BY nome"
+        ),
+        {"uid": usuario_id},
+    )
+    rows = result.fetchall()
+    if not rows:
+        return "Nenhum ingrediente cadastrado na dispensa."
+
+    items = [f"- {r[0]}" + (f" ({r[1]})" if r[1] else "") + (f" [{r[2]}]" if r[2] else "") for r in rows]
+    return "Ingredientes disponíveis na dispensa:\n" + "\n".join(items)
 
 
 def _extrair_json(raw: str) -> dict:

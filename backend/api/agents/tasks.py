@@ -45,6 +45,10 @@ montar_cardapio = Task(
         "- Nome do prato\n"
         "- Ingredientes com quantidades\n"
         "- Modo de preparo resumido\n\n"
+        "Ingredientes da dispensa do usuário:\n"
+        "{ingredientes_dispensa}\n\n"
+        "Priorize o uso dos ingredientes que o usuário já tem na dispensa. "
+        "Se possível, utilize-os para reduzir o desperdício e o custo das compras. "
         "Respeite rigorosamente as regras da dieta."
     ),
     expected_output="Cardápio semanal completo em formato estruturado.",
@@ -76,7 +80,8 @@ revisar_cardapio = Task(
         "  ]\n"
         "}}\n\n"
         "Regras da dieta: {regras_dieta}\n"
-        "Cardápio gerado: {cardapio_gerado}"
+        "Cardápio gerado: {cardapio_gerado}\n"
+        "Ingredientes da dispensa: {ingredientes_dispensa}"
     ),
     expected_output="JSON estruturado do cardápio semanal revisado e validado.",
     agent=revisor,
